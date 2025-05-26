@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:ui": "cucumber-js",
+    "generate:ui": "node scripts/generateUiTests.js",
+    "test:performance": "k6 run performance_tests/basic-load-test.js",
+    "generate:perf": "node scripts/generatePerformanceTests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mredzmi/AI_k6_redz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mredzmi/AI_k6_redz/issues"
+  },
+  "homepage": "https://github.com/mredzmi/AI_k6_redz#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
+    "@playwright/test": "^1.52.0",
+    "cucumber": "^6.0.7",
+    "playwright": "^1.52.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "openai": "^4.103.0"
+  }
+}
