@@ -1,0 +1,299 @@
+{
+  "stageConfig": [
+    {"duration":"1m0s","target":1},
+    {"duration":"2m0s","target":2},
+    {"duration":"3m0s","target":3}
+  ],
+  "testInfo": {
+    "timestamp": "2025-06-05T16-43-21-131Z",
+    "testType": "staged-load-test-sayalive-user-journey",
+    "totalStages": 3,
+    "endpoints": [
+      "homepage",
+      "event_page",
+      "checkout"
+    ],
+    "description": "Complete user journey through sayalive.io with all sub-resources"
+  },
+  "root_group": {
+    "checks": [],
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+        {
+          "id": "80ed18938f7480fba6e973e02593846c",
+          "groups": [],
+          "checks": [
+              {
+                "id": "38cc10ca720bfc1edd04a2746499adf3",
+                "passes": 105,
+                "fails": 0,
+                "name": "homepage status is 200",
+                "path": "::page_1 - https://sayalive.io/::homepage status is 200"
+              },
+              {
+                "name": "homepage response time < 500ms",
+                "path": "::page_1 - https://sayalive.io/::homepage response time < 500ms",
+                "id": "6faec556f7c1d7e32907b80312103861",
+                "passes": 103,
+                "fails": 2
+              }
+            ],
+          "name": "page_1 - https://sayalive.io/",
+          "path": "::page_1 - https://sayalive.io/"
+        },
+        {
+          "path": "::page_2 - https://sayalive.io/hausboomfestival2025",
+          "id": "43ce68a357e962709212f5ce2b47434a",
+          "groups": [],
+          "checks": [
+              {
+                "fails": 0,
+                "name": "event page status is 200",
+                "path": "::page_2 - https://sayalive.io/hausboomfestival2025::event page status is 200",
+                "id": "b5e22ed86d6f3504a9467edae4894509",
+                "passes": 105
+              },
+              {
+                "name": "event page response time < 500ms",
+                "path": "::page_2 - https://sayalive.io/hausboomfestival2025::event page response time < 500ms",
+                "id": "69a8fb07992cd1ce4e8eea6080c16b75",
+                "passes": 102,
+                "fails": 3
+              }
+            ],
+          "name": "page_2 - https://sayalive.io/hausboomfestival2025"
+        },
+        {
+          "id": "c5e36ea8596d44252a20492bc0205311",
+          "groups": [],
+          "checks": [
+              {
+                "path": "::page_3 - https://sayalive.io/checkout?type=guest::checkout page status is 200",
+                "id": "00d900985251db69b1dc392336338178",
+                "passes": 105,
+                "fails": 0,
+                "name": "checkout page status is 200"
+              },
+              {
+                "name": "checkout page response time < 500ms",
+                "path": "::page_3 - https://sayalive.io/checkout?type=guest::checkout page response time < 500ms",
+                "id": "6ddf443f9325cfc84319a84a5bd15157",
+                "passes": 102,
+                "fails": 3
+              }
+            ],
+          "name": "page_3 - https://sayalive.io/checkout?type=guest",
+          "path": "::page_3 - https://sayalive.io/checkout?type=guest"
+        }
+      ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": true,
+    "isStdErrTTY": true,
+    "testRunDurationMs": 364057.7557
+  },
+  "metrics": {
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 105,
+        "rate": 0.2884157756730356
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 233.5942,
+        "p(90)": 1.0002,
+        "p(95)": 1.157369999999998,
+        "avg": 0.553745008818342
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.0021164021164021165,
+        "passes": 6,
+        "fails": 2829
+      }
+    },
+    "http_req_tls_handshaking": {
+      "contains": "time",
+      "values": {
+        "avg": 0.19356119929453258,
+        "min": 0,
+        "med": 0,
+        "max": 184.1003,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "type": "trend"
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 656.1438,
+        "p(95)": 908.7624000000003,
+        "avg": 726.6980473015876,
+        "min": 162.2839,
+        "med": 410.181,
+        "max": 39180.4484
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 895162,
+        "rate": 2458.846119838342
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 2
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 5488.6098,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 5.874781481481481,
+        "min": 0
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 112.25899999999999,
+        "min": 11.2342,
+        "med": 51.801,
+        "max": 34461.7504,
+        "p(90)": 215.44126,
+        "p(95)": 267.44527999999985
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    "http_req_blocked": {
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 246.2321,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.3402663139329807,
+        "min": 0
+      },
+      "type": "trend"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 143.94639999999964,
+        "p(95)": 224.14656999999994,
+        "avg": 88.48046126984124,
+        "min": 0,
+        "med": 34.0418,
+        "max": 34332.0759
+      }
+    },
+    "checks": {
+      "contains": "default",
+      "values": {
+        "rate": 0.9873015873015873,
+        "passes": 622,
+        "fails": 8
+      },
+      "type": "rate"
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2835,
+        "rate": 7.787225943171962
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 134.86097414462074,
+        "min": 0,
+        "med": 51.801,
+        "max": 34461.7504,
+        "p(90)": 216.29403999999997,
+        "p(95)": 271.30344999999994
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 9.6507,
+        "max": 28098.434,
+        "p(90)": 74.46467999999997,
+        "p(95)": 129.79058999999992,
+        "avg": 45.8267678659612,
+        "min": 0
+      }
+    },
+    "data_received": {
+      "values": {
+        "count": 241440371,
+        "rate": 663192.4941023857
+      },
+      "type": "counter",
+      "contains": "data"
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 4251.2898,
+        "max": 47589.6503,
+        "p(90)": 4819.415500000001,
+        "p(95)": 5071.687179999999,
+        "avg": 5192.067182857147,
+        "min": 3913.403
+      }
+    }
+  }
+}
