@@ -1,0 +1,408 @@
+{
+  "testInfo": {
+    "description": "Comprehensive user journey with realistic data payloads including multipart form submissions, payment gateway integration, OAuth flows, and dynamic user data generation",
+    "features": [
+      "Dynamic user data generation per VU",
+      "Multipart form data submissions",
+      "Payment gateway simulation (Razer Pay)",
+      "Google OAuth flow simulation",
+      "Comprehensive analytics tracking",
+      "Real form validation and CSRF tokens",
+      "Complete resource loading (CSS, JS, images, fonts)",
+      "Stage-based performance tracking"
+    ],
+    "timestamp": "2025-06-07T11-14-16-467Z",
+    "testType": "staged-load-test-sayalive-comprehensive-with-data-payloads",
+    "totalStages": 3,
+    "endpoints": [
+      "homepage",
+      "event_page",
+      "checkout_post",
+      "checkout",
+      "ticket_booking_submit",
+      "payment_gateway",
+      "google_oauth_start"
+    ]
+  },
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "checks": [
+          {
+            "name": "homepage status is 200",
+            "path": "::page_1 - https://sayalive.io/::homepage status is 200",
+            "id": "38cc10ca720bfc1edd04a2746499adf3",
+            "passes": 55,
+            "fails": 0
+          },
+          {
+            "passes": 55,
+            "fails": 0,
+            "name": "homepage response time < 500ms",
+            "path": "::page_1 - https://sayalive.io/::homepage response time < 500ms",
+            "id": "6faec556f7c1d7e32907b80312103861"
+          }
+        ],
+        "name": "page_1 - https://sayalive.io/",
+        "path": "::page_1 - https://sayalive.io/",
+        "id": "80ed18938f7480fba6e973e02593846c",
+        "groups": []
+      },
+      {
+        "name": "page_2 - https://sayalive.io/hausboomfestival2025",
+        "path": "::page_2 - https://sayalive.io/hausboomfestival2025",
+        "id": "43ce68a357e962709212f5ce2b47434a",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 55,
+              "fails": 0,
+              "name": "event page status is 200",
+              "path": "::page_2 - https://sayalive.io/hausboomfestival2025::event page status is 200",
+              "id": "b5e22ed86d6f3504a9467edae4894509"
+            },
+            {
+              "name": "event page response time < 500ms",
+              "path": "::page_2 - https://sayalive.io/hausboomfestival2025::event page response time < 500ms",
+              "id": "69a8fb07992cd1ce4e8eea6080c16b75",
+              "passes": 54,
+              "fails": 1
+            }
+          ]
+      },
+      {
+        "name": "page_3 - https://sayalive.io/check-out2",
+        "path": "::page_3 - https://sayalive.io/check-out2",
+        "id": "3441c66b12584a6f040dc3af257b488b",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 0,
+              "fails": 55,
+              "name": "checkout POST status is 200",
+              "path": "::page_3 - https://sayalive.io/check-out2::checkout POST status is 200",
+              "id": "7f0e193f1bc1545af53517d97b1f5b60"
+            },
+            {
+              "path": "::page_3 - https://sayalive.io/check-out2::checkout POST response time < 500ms",
+              "id": "755ae463b690129bb51c7cfff97128ac",
+              "passes": 55,
+              "fails": 0,
+              "name": "checkout POST response time < 500ms"
+            }
+          ]
+      },
+      {
+        "checks": [
+          {
+            "name": "checkout page status is 200",
+            "path": "::page_4 - https://sayalive.io/checkout?type=guest::checkout page status is 200",
+            "id": "1aecc2f6e40b6e6ffebf83ebcf86dcc9",
+            "passes": 55,
+            "fails": 0
+          },
+          {
+            "name": "checkout page response time < 500ms",
+            "path": "::page_4 - https://sayalive.io/checkout?type=guest::checkout page response time < 500ms",
+            "id": "9b20d5e19200ee2fd36bcab935abaf61",
+            "passes": 55,
+            "fails": 0
+          }
+        ],
+        "name": "page_4 - https://sayalive.io/checkout?type=guest",
+        "path": "::page_4 - https://sayalive.io/checkout?type=guest",
+        "id": "790916df1afd170d5e6caadcbab4d2a2",
+        "groups": []
+      },
+      {
+        "name": "page_5 - https://sayalive.io/ticket-booking/199?type=guest",
+        "path": "::page_5 - https://sayalive.io/ticket-booking/199?type=guest",
+        "id": "34bca5347a2ab06719893f68ea2f4502",
+        "groups": [],
+        "checks": [
+            {
+              "id": "83c5710ba4b5c929667cc5c919b4b64a",
+              "passes": 0,
+              "fails": 55,
+              "name": "ticket booking form submitted successfully",
+              "path": "::page_5 - https://sayalive.io/ticket-booking/199?type=guest::ticket booking form submitted successfully"
+            },
+            {
+              "name": "ticket booking response time < 1000ms",
+              "path": "::page_5 - https://sayalive.io/ticket-booking/199?type=guest::ticket booking response time < 1000ms",
+              "id": "272e8e40da380fb4f5b5c12f37ceb422",
+              "passes": 55,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "path": "::page_6 - https://pay.merchant.razer.com/RMS/pay/SJsayalive/::payment gateway loads successfully",
+              "id": "215df27b9094bd650ebf7207af85276f",
+              "passes": 55,
+              "fails": 0,
+              "name": "payment gateway loads successfully"
+            },
+            {
+              "name": "payment gateway response time < 2000ms",
+              "path": "::page_6 - https://pay.merchant.razer.com/RMS/pay/SJsayalive/::payment gateway response time < 2000ms",
+              "id": "8993d201b1e34d00bd86e7a89224f869",
+              "passes": 55,
+              "fails": 0
+            },
+            {
+              "name": "payment page contains expected elements",
+              "path": "::page_6 - https://pay.merchant.razer.com/RMS/pay/SJsayalive/::payment page contains expected elements",
+              "id": "c1f969bb4716673d8bf31fec9b97f1ce",
+              "passes": 55,
+              "fails": 0
+            }
+          ],
+        "name": "page_6 - https://pay.merchant.razer.com/RMS/pay/SJsayalive/",
+        "path": "::page_6 - https://pay.merchant.razer.com/RMS/pay/SJsayalive/",
+        "id": "07be19bea760ff212fa6a4eace84cbc7"
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "path": "::page_7 - https://sayalive.io/customer/auth/google::Google OAuth redirect initiated",
+              "id": "cc3a5a257cf760005a410294b3157b20",
+              "passes": 55,
+              "fails": 0,
+              "name": "Google OAuth redirect initiated"
+            },
+            {
+              "path": "::page_7 - https://sayalive.io/customer/auth/google::OAuth response time < 1500ms",
+              "id": "4210d495a562b39d5540eb80d07912a0",
+              "passes": 55,
+              "fails": 0,
+              "name": "OAuth response time < 1500ms"
+            }
+          ],
+        "name": "page_7 - https://sayalive.io/customer/auth/google",
+        "path": "::page_7 - https://sayalive.io/customer/auth/google",
+        "id": "af865d8945d62ddfad0ef97bd1b97de9"
+      }
+    ],
+    "checks": []
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": true,
+    "isStdErrTTY": true,
+    "testRunDurationMs": 369069.0421
+  },
+  "metrics": {
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "rate": 7543.304049993089,
+        "count": 2784000
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 799781429,
+        "rate": 2167023.883794885
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 10034.081492727273,
+        "min": 9620.2814,
+        "med": 9945.1901,
+        "max": 11219.7262,
+        "p(90)": 10480.72084,
+        "p(95)": 10772.47529
+      }
+    },
+    "group_duration": {
+      "values": {
+        "p(95)": 761.0754,
+        "avg": 432.81520675324697,
+        "min": 30.7088,
+        "med": 532.6171,
+        "max": 1810.269,
+        "p(90)": 714.94894
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 265.1636,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.1844422128998427,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 66.6291,
+        "p(95)": 90.6043,
+        "avg": 39.14869620695686,
+        "min": 0,
+        "med": 20.0494,
+        "max": 1095.8062
+      }
+    },
+    "vus_max": {
+      "contains": "default",
+      "values": {
+        "value": 3,
+        "min": 3,
+        "max": 3
+      },
+      "type": "gauge"
+    },
+    "http_req_tls_handshaking": {
+      "values": {
+        "max": 201.5119,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.10233452193672438,
+        "min": 0,
+        "med": 0
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 26.8722,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.038717951407096655,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 5721,
+        "rate": 15.501164680319851
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 111,
+        "rate": 0.8654545454545455,
+        "passes": 714
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 53.1314601817864,
+        "min": 5.0002,
+        "med": 26.4375,
+        "max": 1269.4043,
+        "p(90)": 98.6461,
+        "p(95)": 169.8257
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 55,
+        "rate": 0.1490236073094899
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "values": {
+        "max": 1269.4043,
+        "p(90)": 99.8181,
+        "p(95)": 172.37035,
+        "avg": 53.39553655319907,
+        "min": 5.0002,
+        "med": 25.8433
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 49.3267,
+        "p(90)": 0.7282,
+        "p(95)": 1.0007,
+        "avg": 0.3169496241915746,
+        "min": 0
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 110,
+        "fails": 5611,
+        "rate": 0.01922740779583989
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 2
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 1.8819,
+        "max": 694.8537,
+        "p(90)": 33.6413,
+        "p(95)": 65.6428,
+        "avg": 13.665814350637948
+      }
+    }
+  },
+  "stageConfig": [
+    {"duration":"1m0s","target":1},
+    {"duration":"2m0s","target":2},
+    {"duration":"3m0s","target":3}
+  ]
+}

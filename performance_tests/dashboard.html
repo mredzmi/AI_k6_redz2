@@ -835,11 +835,88 @@
         function populateStageMetrics(data) {
             const container = document.getElementById('stageMetricsContainer');
             const metrics = data.metrics || {};
+            const stageConfig = data.stageConfig || [];
             
-            // Since we don't have stage-specific data, we'll estimate based on overall metrics
-            const httpDuration = metrics.http_req_duration?.values || {};
-            const httpWaiting = metrics.http_req_waiting?.values || {};
-            const httpBlocked = metrics.http_req_blocked?.values || {};
+            // Get actual stage information from test data
+            const testDuration = data.state?.testRunDurationMs || 0;
+            const totalDurationMinutes = (testDuration / 1000 / 60).toFixed(1);
+            
+            // Build dynamic stage rows based on actual configuration
+            let stageRows = '';
+            stageConfig.forEach((stage, index) => {
+                const stageNum = index + 1;
+                const httpDuration = metrics.http_req_duration?.values || {};
+                const httpReqFailed = metrics.http_req_failed?.values || {};
+                const successRate = ((1 - (httpReqFailed.rate || 0)) * 100).toFixed(1);
+                
+                stageRows += `
+                    <tr>
+                        <td><strong>Stage ${stageNum}</strong></td>
+                        <td>${stage.duration}</td>
+                        <td>${stage.target} VU${stage.target > 1 ? 's' : ''}</td>
+                        <td>${formatValue(httpDuration.avg)}</td>
+                        <td>${formatValue(httpDuration.max)}</td>
+                        <td>${successRate}%</td>
+                        <td><span style="color: ${successRate == 100 ? '#4CAF50' : '#f44336'}; font-weight: 600;">${successRate == 100 ? '✓ Passed' : '✗ Failed'}</span></td>
+                    </tr>
+                `;
+            });
+            
+            // Build failure analysis
+            const checks = metrics.checks?.values || {};
+            const failedChecks = checks.fails || 0;
+            const totalChecks = (checks.passes || 0) + failedChecks;
+            
+            let failureAnalysisHtml = '';
+            if (failedChecks > 0) {
+                failureAnalysisHtml = `
+                    <h3 style="margin: 30px 0 20px 0; color: #f44336;">🚨 Failure Analysis</h3>
+                    <div style="background: rgba(244, 67, 54, 0.1); border-radius: 8px; padding: 20px; border-left: 4px solid #f44336; margin-bottom: 20px;">
+                        <h4 style="color: #f44336; margin-bottom: 15px;">Failed Checks Summary</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                            <div>
+                                <strong>Total Failed Checks:</strong> ${failedChecks}<br>
+                                <strong>Total Checks:</strong> ${totalChecks}<br>
+                                <strong>Failure Rate:</strong> ${((failedChecks / totalChecks) * 100).toFixed(1)}%
+                            </div>
+                            <div>
+                                <strong>Most Likely Causes:</strong><br>
+                                • Response time exceeded 500ms threshold<br>
+                                • Non-200 HTTP status codes<br>
+                                • Network connectivity issues
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="table" style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th>Check Type</th>
+                                <th>Expected</th>
+                                <th>Possible Failure Reason</th>
+                                <th>Affected Endpoints</th>
+                                <th>Recommendation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Response Time</strong></td>
+                                <td>&lt; 500ms</td>
+                                <td>Server overload, network latency, large resource files</td>
+                                <td>Homepage, Event page, Checkout page, CSS/JS/Image resources</td>
+                                <td>Optimize images, enable CDN, reduce bundle sizes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HTTP Status</strong></td>
+                                <td>200 OK</td>
+                                <td>404 Not Found, 500 Server Error, 503 Service Unavailable</td>
+                                <td>Main pages: sayalive.io/*, Resource files: assets/*, CDN: digitaloceanspaces.com</td>
+                                <td>Check server logs, verify file paths, monitor server health</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+            }
             
             container.innerHTML = `
                 <table class="table">
@@ -855,34 +932,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><strong>Stage 1</strong></td>
-                            <td>5s</td>
-                            <td>1 VU</td>
-                            <td>${formatValue(httpDuration.avg)}</td>
-                            <td>${formatValue(httpDuration.max)}</td>
-                            <td>100%</td>
-                            <td><span style="color: #4CAF50; font-weight: 600;">✓ Passed</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Stage 2</strong></td>
-                            <td>5s</td>
-                            <td>1 VU</td>
-                            <td>${formatValue(httpDuration.avg)}</td>
-                            <td>${formatValue(httpDuration.max)}</td>
-                            <td>100%</td>
-                            <td><span style="color: #4CAF50; font-weight: 600;">✓ Passed</span></td>
-                        </tr>
+                        ${stageRows}
                     </tbody>
                 </table>
+                
+                ${failureAnalysisHtml}
                 
                 <div style="margin-top: 20px; padding: 15px; background: rgba(123, 104, 238, 0.1); border-radius: 8px; border-left: 4px solid #7b68ee;">
                     <h4 style="color: #7b68ee; margin-bottom: 10px;">💡 Stage Analysis Notes</h4>
                     <ul style="color: #333; margin-left: 20px;">
-                        <li>Both stages completed successfully with 100% success rate</li>
-                        <li>Average response time: ${formatValue(httpDuration.avg)}ms (${httpDuration.avg < 500 ? 'Good' : 'Needs optimization'})</li>
-                        <li>No failed requests detected across all stages</li>
-                        <li>Test ran for total duration of ${((data.state?.testRunDurationMs || 0) / 1000).toFixed(1)} seconds</li>
+                        <li>Test completed ${stageConfig.length} stages successfully</li>
+                        <li>Average response time: ${formatValue(metrics.http_req_duration?.values?.avg)}ms ${(metrics.http_req_duration?.values?.avg || 0) < 500 ? '(Good)' : '(Needs optimization)'}</li>
+                        <li>Total requests processed: ${metrics.http_reqs?.values?.count || 0}</li>
+                        <li>Failed checks: ${failedChecks} out of ${totalChecks} total checks</li>
+                        <li>Test duration: ${totalDurationMinutes} minutes</li>
+                        <li>Success rate: ${((1 - (metrics.http_req_failed?.values?.rate || 0)) * 100).toFixed(1)}%</li>
                     </ul>
                 </div>
             `;
