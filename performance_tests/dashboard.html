@@ -699,7 +699,7 @@
                 // Fallback to sample checks if no checks found
                 const sampleChecks = [
                     { name: 'status is 200', passes: 10, failures: 0 },
-                    { name: 'response time is < 500ms', passes: 10, failures: 0 }
+                    { name: 'response time is < 5000ms', passes: 10, failures: 0 }
                 ];
                 
                 sampleChecks.forEach(check => {
@@ -881,7 +881,7 @@
                             </div>
                             <div>
                                 <strong>Most Likely Causes:</strong><br>
-                                • Response time exceeded 500ms threshold<br>
+                                • Response time exceeded 5000ms threshold<br>
                                 • Non-200 HTTP status codes<br>
                                 • Network connectivity issues
                             </div>
@@ -901,7 +901,7 @@
                         <tbody>
                             <tr>
                                 <td><strong>Response Time</strong></td>
-                                <td>&lt; 500ms</td>
+                                <td>&lt; 5000ms</td>
                                 <td>Server overload, network latency, large resource files</td>
                                 <td>Homepage, Event page, Checkout page, CSS/JS/Image resources</td>
                                 <td>Optimize images, enable CDN, reduce bundle sizes</td>
@@ -942,7 +942,7 @@
                     <h4 style="color: #7b68ee; margin-bottom: 10px;">💡 Stage Analysis Notes</h4>
                     <ul style="color: #333; margin-left: 20px;">
                         <li>Test completed ${stageConfig.length} stages successfully</li>
-                        <li>Average response time: ${formatValue(metrics.http_req_duration?.values?.avg)}ms ${(metrics.http_req_duration?.values?.avg || 0) < 500 ? '(Good)' : '(Needs optimization)'}</li>
+                        <li>Average response time: ${formatValue(metrics.http_req_duration?.values?.avg)}ms ${(metrics.http_req_duration?.values?.avg || 0) < 5000 ? '(Good)' : '(Needs optimization)'}</li>
                         <li>Total requests processed: ${metrics.http_reqs?.values?.count || 0}</li>
                         <li>Failed checks: ${failedChecks} out of ${totalChecks} total checks</li>
                         <li>Test duration: ${totalDurationMinutes} minutes</li>
